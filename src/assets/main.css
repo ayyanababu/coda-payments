@@ -1,0 +1,91 @@
+/* Importing the Coda font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Coda:wght@800&display=swap');
+
+/* Resetting default margins, padding and box-sizing for all elements */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Defining color variables for dark theme and default root */
+.dark,
+:root {
+  --primary-color: #280031;
+  --primary-color-text: #fff;
+  --secondary-color: #3c0046;
+  --secondary-color-text: #fff;
+
+  --viewport-mobile: 768px;
+}
+
+/* Defining color variables for light theme */
+.light,
+:root {
+  --primary-color: #fff;
+  --primary-color-text: #3c0046;
+  --secondary-color: #c5c5c5;
+  --secondary-color-text: #969696;
+}
+
+/* Setting default body styles */
+body {
+  background-color: var(--primary-color);
+  color: var(--primary-color-text);
+}
+
+/* 
+  Setting styles for .prose class 
+  prose is a style inspired from tailwind for resetting mdx format to html format
+*/
+.prose {
+  font-family: Coda, sans-serif;
+  color: var(--primary-color-text);
+  line-height: 1.6;
+  max-width: 65ch;
+  margin: 0 auto;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  margin-top: 1.4em;
+  margin-bottom: 0.4em;
+}
+
+.prose h1 {
+  font-size: 2em;
+}
+
+.prose h2 {
+  font-size: 1.5em;
+}
+
+.prose h3 {
+  font-size: 1.17em;
+}
+
+.prose h4 {
+  font-size: 1em;
+}
+
+.prose p,
+.prose ul,
+.prose ol {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.prose ul,
+.prose ol {
+  padding-left: 1em;
+}
+
+.prose a {
+  text-decoration: none;
+}
+
+.prose a:hover {
+  text-decoration: underline;
+}
