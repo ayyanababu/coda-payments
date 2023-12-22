@@ -6,13 +6,15 @@ import sun from '@/assets/sun.svg'
 import moon from '@/assets/moon.svg'
 import { defineComponent } from 'vue'
 import { mapMutations } from 'vuex'
+import STRINGS from '@/constants/strings.js'
+
 </script>
 
 <template>
   <header>
     <div>
       <span>
-        <router-link to="/" class="brand-name">Brand Name</router-link>
+        <router-link to="/" class="brand-name">{{STRINGS.BRAND_NAME}}</router-link>
       </span>
 
       <div class="search-bar" v-if="showSearch">

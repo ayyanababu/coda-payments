@@ -3,7 +3,7 @@
   <!-- The SearchBar component provides an input field for searching. -->
   <div class="search-bar">
     <!-- The search input field. -->
-    <input type="text" v-model="searchQuery" placeholder="Search Games..." />
+    <input type="text" v-model="searchQuery" :placeholder="STRINGS.SEARCH_PLACEHOLDER" />
     <!-- clear text icon -->
     <img
       src="@/assets/clear.svg"
@@ -29,6 +29,8 @@
 import { defineComponent, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import { debounce } from 'lodash'
+import STRINGS from '@/constants/strings.js'
+
 
 export default defineComponent({
   name: 'SearchBar',
@@ -55,7 +57,8 @@ export default defineComponent({
 
     return {
       searchQuery,
-      handleClearText
+      handleClearText,
+      STRINGS
     }
   }
 })
