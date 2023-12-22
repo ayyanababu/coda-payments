@@ -26,7 +26,7 @@ import STRINGS from '@/constants/strings.js'
       </h3>
 
       <div class="settings-buttons">
-        <button @click="toggleGridType">
+        <button @click="toggleGridType" v-if="showGridToggle">
           <img
             :src="gridType === 'grid' ? grid : gridRow"
             :alt="gridType === 'grid' ? 'Grid View' : 'Row View'"
@@ -86,6 +86,14 @@ export default defineComponent({
     onChange: {
       type: Function,
       default: () => {}
+    },
+    /**
+     * Determines if the grid toggle button should be displayed
+     * @type {boolean}
+     */
+    showGridToggle: {
+      type: Boolean,
+      default: true
     }
   },
   emits: ['onChange'],

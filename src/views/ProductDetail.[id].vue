@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HeaderBar title="Product Detial" :showSearch="false" />
+    <HeaderBar title="Product Detial" :showSearch="false" :showGridToggle="false" />
     <ProductDetail />
   </div>
 </template>
