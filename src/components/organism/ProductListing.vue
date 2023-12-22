@@ -2,6 +2,9 @@
   <div class="product-listing" :class="{ 'grid-view': isGridView, 'list-view': !isGridView }">
     <ProductCard v-for="product in products" :key="product.id" :product="product"> </ProductCard>
   </div>
+  
+  <div class="not-found" v-if="products.length === 0">No Games found
+      </div>
 </template>
 
 <script setup lang="ts">
@@ -53,5 +56,14 @@ export default defineComponent({
 .list-view {
   display: flex;
   flex-flow: column;
+}
+
+.not-found {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  width: 100%;
+
 }
 </style>
