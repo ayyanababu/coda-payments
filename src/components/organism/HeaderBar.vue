@@ -128,6 +128,7 @@ export default defineComponent({
 <style scoped>
 .brand-name {
   all: unset;
+  cursor:pointer;
 }
 
 header {
