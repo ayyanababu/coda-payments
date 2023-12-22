@@ -148,8 +148,6 @@ button {
   background: none;
   padding: 0.5rem;
   cursor: pointer;
-  
-  border-bottom: 2px solid var(--primary-color-text);
   color: var(--primary-color-text);
 }
 
