@@ -2,7 +2,7 @@
   <div class="product-container prose">
     <div class="top-bar">
       <div class="column">
-        <img :src="product?.logoLocation" alt="Product Image" />
+        <img :src="product?.logoLocation" @error="handleImageError" alt="Product Image" />
       </div>
       <div class="column">
         <h1>{{ product.name }}</h1>
@@ -70,7 +70,7 @@ export default defineComponent({
     // ...mapActions('productDetail', ['setProductDetail']),
 
     // Handle image loading errors by falling back to a default image
-    handleImgError(e: any) {
+    handleImageError(e: any) {
       e.target.src = fallbackImg
     }
   }

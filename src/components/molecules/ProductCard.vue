@@ -69,7 +69,6 @@ export default defineComponent({
      * Sets the product's image source to the fallback image.
      */
     handleImageError(): void {
-      console.log('### error in image')
       this.productImageSrc = fallbackImg
     }
   }
