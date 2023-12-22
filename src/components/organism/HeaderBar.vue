@@ -6,13 +6,15 @@ import sun from '@/assets/sun.svg'
 import moon from '@/assets/moon.svg'
 import { defineComponent } from 'vue'
 import { mapMutations } from 'vuex'
+import STRINGS from '@/constants/strings.js'
+
 </script>
 
 <template>
   <header>
     <div>
       <span>
-        <router-link to="/" class="brand-name">Brand Name</router-link>
+        <router-link to="/" class="brand-name">{{STRINGS.BRAND_NAME}}</router-link>
       </span>
 
       <div class="search-bar" v-if="showSearch">
@@ -35,7 +37,7 @@ import { mapMutations } from 'vuex'
 
         <button @click="toggleTheme">
           <img
-            :src="theme === 'light' ? sun : moon"
+            :src="theme === 'light' ? moon : sun"
             :alt="theme === 'light' ? 'Light Theme' : 'Dark Theme'"
             width="20"
             height="20"
