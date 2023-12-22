@@ -29,7 +29,7 @@ export default defineComponent({
     ...mapState('home', ['searchQuery']),
     filteredProducts() {
       return this.products.filter((product) => {
-        return product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+        return product.productTitle.toLowerCase().includes(this.searchQuery.toLowerCase())
       })
     }
   },

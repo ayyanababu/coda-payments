@@ -1,33 +1,38 @@
 <!-- @keyup.enter="updateSearchQueryDebounced" -->
 <template>
+  <!-- The SearchBar component provides an input field for searching. -->
   <div class="search-bar">
-    <input type="text" v-model="searchText" placeholder="Search" />
+    <!-- The search input field. -->
+    <input type="text" v-model="searchQuery" placeholder="Search Games..." />
+    <!-- The search icon. --> 
     <img src="@/assets/search.svg" alt="Search" width="20" height="20" />
   </div>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
+<script lang="ts">
+import { defineComponent, ref, watch } from 'vue'
+import { useStore } from 'vuex'
 import { debounce } from 'lodash'
 
-export default {
-  data() {
-    return {
-      searchText: ''
-    }
-  },
-  watch: {
-    searchText: debounce(function (newVal) {
-      this.updateSearchQuery(newVal)
+export default defineComponent({
+  name: 'SearchBar',
+  setup() {
+    const store = useStore()
+    const searchQuery = ref('')
+
+    const updateSearchQueryDebounced = debounce((newVal: string) => {
+      store.dispatch('home/updateSearchQuery', newVal)
     }, 300)
-  },
-  methods: {
-    ...mapActions('home',['updateSearchQuery'])
-    // updateSearchQueryDebounced: debounce(function() {
-    //   this.updateSearchQuery(this.searchText)
-    // }, 300)
+
+    watch(searchQuery, (newVal: string) => {
+      updateSearchQueryDebounced(newVal)
+    })
+
+    return {
+      searchQuery
+    }
   }
-}
+})
 </script>
 
 <style scoped>
