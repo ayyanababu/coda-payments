@@ -6,6 +6,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: color 0.2s ease-out, background-color 0.2s ease-out;
 }
 
 /* Defining color variables for dark theme and default root */
@@ -15,6 +16,11 @@
   --primary-color-text: #fff;
   --secondary-color: #3c0046;
   --secondary-color-text: #fff;
+
+  --foreground-color: #36213d;
+  --foreground-color-text: #fff;
+
+  --foreground-color-light: #eae8f7;
 
   --viewport-mobile: 768px;
 }
@@ -26,6 +32,10 @@
   --primary-color-text: #3c0046;
   --secondary-color: #c5c5c5;
   --secondary-color-text: #969696;
+
+  --foreground-color: #c5c5c5;
+  --foreground-color-text: #1d1d1d;
+  --foreground-color-light: #f0f0f0;
 }
 
 /* Setting default body styles */

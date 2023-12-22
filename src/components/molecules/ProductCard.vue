@@ -37,13 +37,13 @@ export default defineComponent({
   data() {
     return {
       // The product's image source. If the product's logoLocation is not provided, a fallback image is used.
-      productImageSrc: this.product?.logoLocation || fallbackImg,
+      productImageSrc: this.product?.logoLocation || fallbackImg
     }
   },
   computed: {
     ...mapState('home', ['gridType']),
     isGridView(): boolean {
-      return this.gridType ? this.gridType === 'grid' : false;
+      return this.gridType ? this.gridType === 'grid' : false
     }
   },
   mounted() {},
@@ -63,7 +63,7 @@ export default defineComponent({
      * Handles the error event on the product image.
      * Sets the product's image source to the fallback image.
      */
-     handleImageError(): void {
+    handleImageError(): void {
       console.log('### error in image')
       this.productImageSrc = fallbackImg
     }
@@ -71,33 +71,56 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .grid-view {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 1 / 1.25;
 }
 
 .list-view img,
 .list-view {
-  width: 100% !important;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: var(--primary-color-text);
+
+  @media (max-width: 520px) {
+    aspect-ratio: 1 / 1.25;
+  }
 }
 
 #my-card {
   position: relative;
-  border: 1px solid var(--secondary-color);
   border-radius: 15px;
   contain: content;
   width: 100%;
-  max-width: 250px;
-  height: 400px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex: 1 1 100%;
+  transform: scale(1);
+  transition: all 0.25s ease-in-out;
+
+  @media (max-width: 500) {
+    width: 100%;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  &:hover img {
+    opacity: 0.85;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 #my-card img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  background-color: var(--primary-color-text);
+  background-color: var(--foreground-color-light);
 }
 
 #my-card span {
@@ -106,7 +129,8 @@ export default defineComponent({
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: var(--primary-color);
+  background-color: var(--foreground-color);
+  color: var(--foreground-color-text);
   width: 100%;
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -114,6 +138,5 @@ export default defineComponent({
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: var(--primary-color-text);
 }
 </style>

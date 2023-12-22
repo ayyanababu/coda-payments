@@ -92,9 +92,13 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.brand-name {
+  all: unset;
+}
+
 header {
   background-color: var(--secondary-color);
-  color: var(--secondary-color-text);
+  color: var( --foreground-color-text);
   padding: 0.5rem 1rem;
   text-align: center;
   font-size: 1.5rem;
