@@ -1,49 +1,62 @@
 <template>
+  <!-- Product listing container with dynamic class based on grid view state -->
   <div class="product-listing" :class="{ 'grid-view': isGridView, 'list-view': !isGridView }">
-    <ProductCard v-for="product in products" :key="product.id" :product="product"> </ProductCard>
+    <!-- Loop through each product and render a ProductCard component for it -->
+    <ProductCard v-for="product in products" :key="product.id" :product="product" />
   </div>
   
   <div class="not-found" v-if="products.length === 0">No Games found
       </div>
 </template>
 
-<script setup lang="ts">
-import { defineComponent } from 'vue'
-import ProductCard from '@/components/molecules/ProductCard.vue'
-</script>
-
 <script lang="ts">
-import { mapState } from 'vuex'
+import { defineComponent, computed } from 'vue'
+import ProductCard from '@/components/molecules/ProductCard.vue'
+import { useStore } from 'vuex'
+
 export default defineComponent({
-  name: 'HomeView',
-  components: {},
+  name: 'ProductListing',
+  components: {
+    ProductCard
+  },
   props: {
+     /**
+     * Array of products to be displayed
+     * @type {Array}
+     */
     products: {
       type: Array,
       required: true
     }
   },
-  data() {},
-  computed: {
-    ...mapState('home', ['gridType']),
-    isGridView() {
-      return this.gridType === 'grid'
+  setup() {
+    // Access Vuex store
+    const store = useStore()
+
+     /**
+     * Computed property that determines if the grid view is active
+     * @returns {boolean}
+     */
+    const isGridView = computed(() => store.state.home.gridType === 'grid')
+
+    return {
+      isGridView
     }
-  },
-  mounted() {
-    console.log(this.products)
   }
 })
 </script>
 
-<style>
+<!-- Scoped styles for ProductListing component -->
+<style scoped>
 .product-listing {
   gap: 2rem;
   max-width: 1280px;
   margin: 0 auto;
   padding: 1rem;
+}
 
-  @media (max-width: 520px) {
+@media (max-width: 520px) {
+  .product-listing {
     flex-flow: column;
   }
 }

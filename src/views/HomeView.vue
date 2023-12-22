@@ -1,40 +1,71 @@
 <template>
   <main>
-    <HeaderBar :search="search" @onChange="updateSearch" />
-
+    <HeaderBar :search="search" @onChange="updateSearchQuery" />
     <ProductListing :products="filteredProducts" />
   </main>
 </template>
 
-<script setup lang="ts">
-import { defineComponent } from 'vue'
-import HeaderBar from '@/components/organism/HeaderBar.vue'
-import * as Products from '@/api/mocks/products.json'
-import ProductListing from '@/components/organism/ProductListing.vue'
-import { mapActions, mapState } from 'vuex'
-</script>
-
 <script lang="ts">
+import { defineComponent, computed, ref } from 'vue'
+import { useStore } from 'vuex'
+import HeaderBar from '@/components/organism/HeaderBar.vue'
+import ProductListing from '@/components/organism/ProductListing.vue'
+import * as Products from '@/api/mocks/products.json'
+
+
+/**
+ * HomeView component
+ * @component
+ */
 export default defineComponent({
   name: 'HomeView',
-  components: {},
-  props: {},
-  data() {
-    return {
-      products: Products.products,
-      search: ''
-    }
+  components: {
+    HeaderBar,
+    ProductListing
   },
-  computed: {
-    ...mapState('home', ['searchQuery']),
-    filteredProducts() {
-      return this.products.filter((product) => {
-        return product.productTitle.toLowerCase().includes(this.searchQuery.toLowerCase())
+  setup() {
+    // Use Vuex store
+    const store = useStore()
+
+     /**
+     * Local state for search
+     * @type {Ref<string>}
+     */
+    const search = ref('')
+
+    /**
+     * Array of products from JSON file
+     * @type {Product[]}
+     */
+    const products: Product[] = Products.products
+
+    /**
+     * Computed property for searchQuery from Vuex store
+     * @returns {ComputedRef<string>}
+     */
+    const searchQuery = computed(() => store.state.home.searchQuery)
+
+    /**
+     * Computed property for filtered products based on searchQuery
+     * @returns {ComputedRef<Product[]>}
+     */
+    const filteredProducts = computed(() => {
+      return products.filter((product: Product) => {
+        return product.productTitle.toLowerCase().includes(searchQuery.value.toLowerCase())
       })
+    })
+
+    // Method to update searchQuery in Vuex store
+    const updateSearchQuery = (query: string) => {
+      store.dispatch('home/updateSearchQuery', query)
     }
-  },
-  methods: { ...mapActions('home', ['updateSearchQuery']) }
+
+    return {
+      search,
+      searchQuery,
+      filteredProducts,
+      updateSearchQuery
+    }
+  }
 })
 </script>
-
-<style scoped></style>
