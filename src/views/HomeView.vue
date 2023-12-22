@@ -6,12 +6,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
 import HeaderBar from '@/components/organism/HeaderBar.vue'
 import ProductListing from '@/components/organism/ProductListing.vue'
 import * as Products from '@/api/mocks/products.json'
-
 
 /**
  * HomeView component
@@ -27,7 +26,7 @@ export default defineComponent({
     // Use Vuex store
     const store = useStore()
 
-     /**
+    /**
      * Local state for search
      * @type {Ref<string>}
      */
@@ -37,7 +36,7 @@ export default defineComponent({
      * Array of products from JSON file
      * @type {Product[]}
      */
-    const products: Product[] = Products.products
+    // const products: Product[] = Products.products
 
     /**
      * Computed property for searchQuery from Vuex store
@@ -50,6 +49,11 @@ export default defineComponent({
      * @returns {ComputedRef<Product[]>}
      */
     const filteredProducts = computed(() => {
+      const products = store.state.home.products
+
+      if (!products) {
+        return []
+      }
       return products.filter((product: Product) => {
         return product.productTitle.toLowerCase().includes(searchQuery.value.toLowerCase())
       })
@@ -59,6 +63,12 @@ export default defineComponent({
     const updateSearchQuery = (query: string) => {
       store.dispatch('home/updateSearchQuery', query)
     }
+
+    // On component mount, set products to Vuex store
+    onMounted(() => {
+      // store.commit('setProducts', Products.products)
+      store.dispatch('home/updateProducts', Products.products)
+    })
 
     return {
       search,

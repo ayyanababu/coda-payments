@@ -1,25 +1,16 @@
-<script lang="ts" setup>
-import { defineComponent, ref } from 'vue'
-import { mapState, mapActions } from 'vuex'
-import fallbackImg from '@/assets/fallbackImg.png'
-import type { ProductCardProps } from '@/store/productDetail'
-import products from '@/api/mocks/products.json'
-import { isEmpty } from 'lodash'
-</script>
-
 <template>
   <div class="product-container prose">
     <div class="top-bar">
       <div class="column">
-        <img :src="productDetail?.logoLocation" alt="Product Image" />
+        <img :src="product?.logoLocation" alt="Product Image" />
       </div>
       <div class="column">
-        <h1>{{ productDetail.name }}</h1>
+        <h1>{{ product.name }}</h1>
         <div class="flex-row">
-          <s>${{ productDetail?.variableDenomPriceMaxAmount }}</s>
-          <p class="font-xl">${{ productDetail?.variableDenomPriceMinAmount }}</p>
+          <s>${{ product?.variableDenomPriceMaxAmount }}</s>
+          <p class="font-xl">${{ product?.variableDenomPriceMinAmount }}</p>
         </div>
-        <p>{{ productDetail.tagline }}</p>
+        <p>{{ product.tagline }}</p>
       </div>
     </div>
     <div class="bottom-bar">
@@ -37,22 +28,27 @@ import { isEmpty } from 'lodash'
           Short Description
         </button>
       </div>
-      <div v-if="activeTab === 'longDescription'" v-html="productDetail.longDescription"></div>
-      <div v-if="activeTab === 'shortDescription'" v-html="productDetail.shortDescription"></div>
+      <div v-if="activeTab === 'longDescription'" v-html="product.longDescription"></div>
+      <div v-if="activeTab === 'shortDescription'" v-html="product.shortDescription"></div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
+import fallbackImg from '@/assets/fallbackImg.png'
+
 export default defineComponent({
   // Component name
   name: 'ProductDetail',
 
-  // Child components used by this component
-  components: {},
-
   // Props passed to this component
-  props: {},
+  props: {
+    product: {
+      type: Object,
+      required: true
+    }
+  },
 
   // Data properties of this component
   data() {
@@ -64,45 +60,18 @@ export default defineComponent({
 
   // Computed properties of this component
   computed: {
-    // Map the 'selectedProduct' state from the 'productDetail' Vuex module
-    ...mapState('productDetail', ['selectedProduct']),
-
-    // Cast the 'selectedProduct' state to the 'ProductCardProps' type
-    productDetail(): ProductCardProps {
-      return this.selectedProduct as ProductCardProps
-    },
-
     // Compute the source of the product image, falling back to a default image if not available
     imgSrc() {
-      return this.productDetail?.logoLocation || fallbackImg
+      return this.product?.logoLocation || fallbackImg
     }
   },
-
-  // Methods of this component
   methods: {
     // Map the 'setProductDetail' action from the 'productDetail' Vuex module
-    ...mapActions('productDetail', ['setProductDetail']),
+    // ...mapActions('productDetail', ['setProductDetail']),
 
     // Handle image loading errors by falling back to a default image
     handleImgError(e: any) {
       e.target.src = fallbackImg
-    }
-  },
-
-  // Lifecycle hook that is called when the component is mounted
-  mounted() {
-    // If the product detail is not already loaded, fetch it
-    if (isEmpty(this.productDetail)) {
-      // Get the product ID from the route parameters
-      const id = this.$route.params.id
-
-      // Find the product with the matching ID in the products array
-      const product = products.products.filter((product) => {
-        return product.id == id
-      })[0]
-
-      // Set the product detail to the found product
-      this.setProductDetail(product)
     }
   }
 })

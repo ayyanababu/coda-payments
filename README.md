@@ -9,7 +9,8 @@ This project involves building a small Vue.js web application that displays prod
    - [Running the Project](#running-the-project)
    - [Folder Structure](#folder-structure)
 - [Features](#features)
-- [External Dependencies](#external-dependencies)
+- [Dependencies](#dependencies)
+- [Acknowledgements](#acknowledgements)
 
 ## Prerequisites
    
@@ -68,14 +69,14 @@ After confirming the Node.js requirements, follow these steps to install the pro
         │   │   └── HomeView.vue            # Home/Dashboard of app
         │   │   └── ProductDetail.[id].vue  # Product Details page
         │   └── main.js                     # Entry point of the application
-        ├── public                  # Public static assets
-        │   ├── img                 # Images
-        │   └── index.html          # HTML template
-        ├── node_modules            # Node.js dependencies (created by npm install)
-        ├── package.json            # Project metadata and dependencies
-        ├── package-lock.json       # Exact dependency tree (created by npm install)
-        ├── tsconfig.json           # TypeScript compiler options
-        └── README.md               # Project documentation
+        ├── public                          # Public static assets
+        │   ├── img                         # Images
+        │   └── index.html                  # HTML template
+        ├── node_modules                    # Node.js dependencies (created by npm install)
+        ├── package.json                    # Project metadata and dependencies
+        ├── package-lock.json               # Exact dependency tree (created by npm install)
+        ├── tsconfig.json                   # TypeScript compiler options
+        └── README.md                       # Project documentation
 
 
 ## Features
