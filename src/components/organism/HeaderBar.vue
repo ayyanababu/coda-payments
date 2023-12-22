@@ -37,7 +37,7 @@ import STRINGS from '@/constants/strings.js'
 
         <button @click="toggleTheme">
           <img
-            :src="theme === 'light' ? sun : moon"
+            :src="theme === 'light' ? moon : sun"
             :alt="theme === 'light' ? 'Light Theme' : 'Dark Theme'"
             width="20"
             height="20"
