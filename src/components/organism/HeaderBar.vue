@@ -55,18 +55,34 @@ export default defineComponent({
     SearchBar
   },
   props: {
+      /**
+     * Title to be displayed in the header
+     * @type {string}
+     */
     title: {
       type: String,
       default: ''
     },
+    /**
+     * Determines if the search bar should be displayed
+     * @type {boolean}
+     */
     showSearch: {
       type: Boolean,
       default: true
     },
+     /**
+     * Search query
+     * @type {string}
+     */
     search: {
       type: String,
       default: ''
     },
+    /**
+     * Function to be called when the search query changes
+     * @type {Function}
+     */
     onChange: {
       type: Function,
       default: () => {}
@@ -81,10 +97,18 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations('home', ['setGridType', 'setTheme']),
+  /**
+   * Toggles the grid type between 'grid' and 'list'
+   * and updates the Vuex store
+   */
     toggleGridType() {
       this.gridType = this.gridType === 'grid' ? 'list' : 'grid'
       this.setGridType(this.gridType)
     },
+   /**
+    * Toggles the theme between 'light' and 'dark'
+    * and updates the body class
+   */
     toggleTheme() {
       this.theme = this.theme === 'light' ? 'dark' : 'light';
       document.body.className = this.theme;

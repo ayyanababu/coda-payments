@@ -38,10 +38,16 @@ export default defineComponent({
     const store = useStore()
     const searchQuery = ref('')
 
+
+    /**
+     * Debounced function to update search query in Vuex store
+     * @param {string} newVal - The new search query
+    */
     const updateSearchQueryDebounced = debounce((newVal: string) => {
       store.dispatch('home/updateSearchQuery', newVal)
     }, 300)
 
+    // Watch for changes in searchQuery and update Vuex store
     watch(searchQuery, (newVal: string) => {
       updateSearchQueryDebounced(newVal)
     })
@@ -50,6 +56,10 @@ export default defineComponent({
       searchQuery.value = store.state.home.searchQuery
     })
 
+  /**
+   * Toggles the theme between 'light' and 'dark'
+   * and updates the body class
+   */
     const handleClearText = () => {
       searchQuery.value = ''
       store.dispatch('home/updateSearchQuery', '')
