@@ -29,13 +29,13 @@ export default defineComponent({
   },
   data() {
     return {
-      imgSrc: this.product?.logoLocation || fallbackImg
+      imgSrc: this.product?.logoLocation || fallbackImg,
     }
   },
   computed: {
     ...mapState('home', ['gridType']),
     isGridView() {
-      return this.gridType === 'grid'
+      return this.gridType ? this.gridType === 'grid' : false;
     }
   },
   mounted() {},
