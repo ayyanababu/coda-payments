@@ -7,7 +7,7 @@
     @click="handleClick"
   >
     <!-- The product's image. If the image fails to load, a fallback image is used. -->
-    <img :src="productImageSrc" alt="" @error="handleImageError" />
+    <img :src="productImageSrc" alt="" @error="handleImageError" @load="handleImageLoad" :class="{ 'fade-in': imageLoaded }" />
     <!-- The product's title. -->
     <span>{{ product?.productTitle }}</span>
   </a>
@@ -15,13 +15,18 @@
 
 <script setup lang="ts">
 // Vue imports
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 // Vuex imports
 import { mapState, mapActions } from 'vuex'
 // Type imports
 import type { ProductCardProps } from '@/store/productDetail'
 // Asset imports
 import fallbackImg from '@/assets/fallbackImg.png'
+
+const imageLoaded = ref(false)
+const handleImageLoad = () => {
+  imageLoaded.value = true
+}
 </script>
 
 <script lang="ts">
@@ -72,6 +77,16 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
+
+.fade-in {
+  transition: opacity 1s;
+  opacity: 1;
+}
+
+img {
+  opacity: 0;
+}
+
 .grid-view {
   display: flex;
   flex-direction: column;

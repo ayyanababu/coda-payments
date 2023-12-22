@@ -4,13 +4,29 @@
   <div class="search-bar">
     <!-- The search input field. -->
     <input type="text" v-model="searchQuery" placeholder="Search Games..." />
-    <!-- The search icon. --> 
-    <img src="@/assets/search.svg" alt="Search" width="20" height="20" />
+    <!-- clear text icon -->
+    <img
+      src="@/assets/clear.svg"
+      alt="Clear"
+      width="30"
+      height="30"
+      @click="handleClearText"
+      v-if="searchQuery.length > 0"
+    />
+
+    <!-- The search icon. -->
+    <img
+      src="@/assets/search.svg"
+      alt="Search"
+      width="20"
+      height="20"
+      v-if="searchQuery.length === 0"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, onMounted, ref, watch } from 'vue'
 import { useStore } from 'vuex'
 import { debounce } from 'lodash'
 
@@ -28,14 +44,24 @@ export default defineComponent({
       updateSearchQueryDebounced(newVal)
     })
 
+    onMounted(() => {
+      searchQuery.value = store.state.home.searchQuery
+    })
+
+    const handleClearText = () => {
+      searchQuery.value = ''
+      store.dispatch('home/updateSearchQuery', '')
+    }
+
     return {
-      searchQuery
+      searchQuery,
+      handleClearText
     }
   }
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .search-bar {
   display: flex;
   justify-content: center;
@@ -62,6 +88,33 @@ export default defineComponent({
   img {
     position: absolute;
     right: 10px;
+  }
+
+  .clear-text-button {
+    all: unset;
+    position: absolute;
+    right: 40px;
+    top: 2px;
+
+    & img {
+      position: unset;
+    }
+  }
+  .clear-text {
+    cursor: pointer;
+    right: 40px;
+    transition: all 0.2s ease-in-out;
+    transform: scale(1);
+
+    &:hover {
+      opacity: 0.75;
+      transform: scale(1.1);
+    }
+
+    &:active {
+      opacity: 0.5;
+      transform: scale(0.9);
+    }
   }
 }
 </style>
