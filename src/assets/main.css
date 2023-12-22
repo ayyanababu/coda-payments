@@ -49,18 +49,15 @@ body {
   prose is a style inspired from tailwind for resetting mdx format to html format
 */
 .prose {
-  font-family: Coda, sans-serif;
+  font-family:  sans-serif;
   color: var(--primary-color-text);
   line-height: 1.6;
-  max-width: 65ch;
-  margin: 0 auto;
 }
 
 .prose h1,
 .prose h2,
 .prose h3,
 .prose h4 {
-  margin-top: 1.4em;
   margin-bottom: 0.4em;
 }
 

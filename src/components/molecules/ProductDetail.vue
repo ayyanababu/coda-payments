@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { mapState, mapActions } from 'vuex'
 import fallbackImg from '@/assets/fallbackImg.png'
 import type { ProductCardProps } from '@/store/productDetail'
@@ -8,17 +8,39 @@ import { isEmpty } from 'lodash'
 </script>
 
 <template>
-  <div class="prose product-container">
-    <img :src="imgSrc" alt="" @error="handleImgError" />
-
-    <div>
-      <h1>{{ productDetail?.productTitle }}</h1>
-
-      <span v-html="productDetail.shortDescription"></span>
+  <div class="product-container prose">
+    <div class="top-bar">
+      <div class="column">
+        <img :src="productDetail?.logoLocation" alt="Product Image" />
+      </div>
+      <div class="column">
+        <h1>{{ productDetail.name }}</h1>
+        <div class="flex-row">
+          <s>${{ productDetail?.variableDenomPriceMaxAmount }}</s>
+          <p class="font-xl">${{ productDetail?.variableDenomPriceMinAmount }}</p>
+        </div>
+        <p>{{ productDetail.tagline }}</p>
+      </div>
+    </div>
+    <div class="bottom-bar">
+      <div class="tabs">
+        <button
+          :class="activeTab === 'longDescription' ? 'active' : ''"
+          @click="activeTab = 'longDescription'"
+        >
+          Long Description
+        </button>
+        <button
+          :class="activeTab === 'shortDescription' ? 'active' : ''"
+          @click="activeTab = 'shortDescription'"
+        >
+          Short Description
+        </button>
+      </div>
+      <div v-if="activeTab === 'longDescription'" v-html="productDetail.longDescription"></div>
+      <div v-if="activeTab === 'shortDescription'" v-html="productDetail.shortDescription"></div>
     </div>
   </div>
-
-  <span class="flex-col prose product-container" v-html="productDetail.longDescription"></span>
 </template>
 
 <script lang="ts">
@@ -27,7 +49,9 @@ export default defineComponent({
   components: {},
   props: {},
   data() {
-    return {}
+    return {
+      activeTab: 'longDescription'
+    }
   },
   computed: {
     ...mapState('productDetail', ['selectedProduct']),
@@ -57,34 +81,79 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .product-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 1rem 0;
+  padding: 1rem;
   gap: 1rem;
-
-  @media (max-width: 700px) {
-    flex-direction: column;
-    max-width: 100vw;
-  }
+}
+p {
+  margin: 0;
 }
 
 img {
   width: 100%;
   margin-bottom: auto;
-}
-
-h1 {
-  font-size: medium;
+  border-radius: 5px;
 }
 
 .flex-col {
   display: flex;
   flex-direction: column !important;
   gap: 1rem;
+}
+
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.bottom-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tabs {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: baseline;
+}
+
+.font-xl {
+  font-size: 2rem;
+}
+
+button {
+  border: none;
+  background: none;
+  padding: 0.5rem;
+  cursor: pointer;
+  
+  border-bottom: 2px solid var(--primary-color-text);
+  color: var(--primary-color-text);
+}
+
+.bottom-bar .active {
+  border-bottom: 2px solid var(--primary-color-text);
 }
 </style>
