@@ -7,18 +7,17 @@ import moon from '@/assets/moon.svg'
 import { defineComponent } from 'vue'
 import { mapMutations } from 'vuex'
 import STRINGS from '@/constants/strings.js'
-
 </script>
 
 <template>
   <header>
     <div>
       <span>
-        <router-link to="/" class="brand-name">{{STRINGS.BRAND_NAME}}</router-link>
+        <router-link to="/" class="brand-name">{{ STRINGS.BRAND_NAME }}</router-link>
       </span>
 
       <div class="search-bar" v-if="showSearch">
-        <SearchBar @onChange="updateSearch" :search="search" />
+        <SearchBar :search="search" />
       </div>
 
       <h3 class="title" v-if="title.length > 0">
@@ -55,7 +54,7 @@ export default defineComponent({
     SearchBar
   },
   props: {
-      /**
+    /**
      * Title to be displayed in the header
      * @type {string}
      */
@@ -71,7 +70,7 @@ export default defineComponent({
       type: Boolean,
       default: true
     },
-     /**
+    /**
      * Search query
      * @type {string}
      */
@@ -97,6 +96,12 @@ export default defineComponent({
     }
   },
   emits: ['onChange'],
+  /**
+   * Data function that returns the initial data for the component.
+   * @return {Object} The initial data.
+   * @property {string} gridType - The type of grid to display. Defaults to 'grid'.
+   * @property {string} theme - The theme of the header bar. Defaults to 'dark'.
+   */
   data: () => {
     return {
       gridType: 'grid',
@@ -105,21 +110,21 @@ export default defineComponent({
   },
   methods: {
     ...mapMutations('home', ['setGridType', 'setTheme']),
-  /**
-   * Toggles the grid type between 'grid' and 'list'
-   * and updates the Vuex store
-   */
+    /**
+     * Toggles the grid type between 'grid' and 'list'
+     * and updates the Vuex store
+     */
     toggleGridType() {
       this.gridType = this.gridType === 'grid' ? 'list' : 'grid'
       this.setGridType(this.gridType)
     },
-   /**
-    * Toggles the theme between 'light' and 'dark'
-    * and updates the body class
-   */
+    /**
+     * Toggles the theme between 'light' and 'dark'
+     * and updates the body class
+     */
     toggleTheme() {
-      this.theme = this.theme === 'light' ? 'dark' : 'light';
-      document.body.className = this.theme;
+      this.theme = this.theme === 'light' ? 'dark' : 'light'
+      document.body.className = this.theme
     }
   }
 })
@@ -128,12 +133,12 @@ export default defineComponent({
 <style scoped>
 .brand-name {
   all: unset;
-  cursor:pointer;
+  cursor: pointer;
 }
 
 header {
   background-color: var(--secondary-color);
-  color: var( --foreground-color-text);
+  color: var(--foreground-color-text);
   padding: 0.5rem 1rem;
   text-align: center;
   font-size: 1.5rem;

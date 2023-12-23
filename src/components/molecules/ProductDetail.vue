@@ -2,7 +2,7 @@
   <div class="product-container prose">
     <div class="top-bar">
       <div class="column">
-        <img :src="product?.logoLocation" @error="handleImageError" alt="Product Image" />
+        <img :src="product?.logoLocation" @error="handleImageError" :alt="product.name" />
       </div>
       <div class="column">
         <h1>{{ product.name }}</h1>
@@ -10,7 +10,7 @@
           <s>${{ product?.variableDenomPriceMaxAmount }}</s>
           <p class="font-xl">${{ product?.variableDenomPriceMinAmount }}</p>
         </div>
-        <p>{{ product.tagline }}</p>
+        <p class="product-tagline">{{ product.tagline }}</p>
       </div>
     </div>
     <div class="bottom-bar">
@@ -42,7 +42,14 @@ export default defineComponent({
   // Component name
   name: 'ProductDetail',
 
-  // Props passed to this component
+  /**
+   * @property {Object} product - The product object that contains the details of a product.
+   * @property {string} product.name - The name of the product.
+   * @property {string} product.logoLocation - The URL of the product image.
+   * @property {string} product.shortDescription - The short description of the product.
+   * @property {string} product.longDescription - The long description of the product.
+   * This prop is required.
+   */
   props: {
     product: {
       type: Object,
@@ -50,15 +57,21 @@ export default defineComponent({
     }
   },
 
-  // Data properties of this component
+  /*
+   * @data {string} activeTab - The currently active tab, defaults to 'longDescription'.
+   */
   data() {
     return {
-      // The currently active tab, defaults to 'longDescription'
       activeTab: 'longDescription'
     }
   },
 
-  // Computed properties of this component
+  /**
+   * Computed property that returns the source of the product image.
+   * It returns the 'logoLocation' property of the 'product' prop if it exists.
+   * If 'logoLocation' does not exist, it returns a fallback image.
+   * @return {string} The source of the product image.
+   */
   computed: {
     // Compute the source of the product image, falling back to a default image if not available
     imgSrc() {
@@ -69,7 +82,10 @@ export default defineComponent({
     // Map the 'setProductDetail' action from the 'productDetail' Vuex module
     // ...mapActions('productDetail', ['setProductDetail']),
 
-    // Handle image loading errors by falling back to a default image
+    /**
+     * @method handleImageError - Handle image loading errors by falling back to a default image.
+     * @param {Event} e - The event object.
+     */
     handleImageError(e: any) {
       e.target.src = fallbackImg
     }

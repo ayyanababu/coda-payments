@@ -31,35 +31,41 @@ import { useStore } from 'vuex'
 import { debounce } from 'lodash'
 import STRINGS from '@/constants/strings.js'
 
-
 export default defineComponent({
   name: 'SearchBar',
   setup() {
     const store = useStore()
     const searchQuery = ref('')
 
-
     /**
      * Debounced function to update search query in Vuex store
      * @param {string} newVal - The new search query
-    */
+     */
     const updateSearchQueryDebounced = debounce((newVal: string) => {
       store.dispatch('home/updateSearchQuery', newVal)
     }, 300)
 
-    // Watch for changes in searchQuery and update Vuex store
+    /**
+     * Watcher that observes changes in the 'searchQuery' reactive reference.
+     * When 'searchQuery' changes, it calls the 'updateSearchQueryDebounced' function with the new value.
+     * @param {string} newVal - The new value of 'searchQuery'.
+     */
     watch(searchQuery, (newVal: string) => {
       updateSearchQueryDebounced(newVal)
     })
 
+    /**
+     * Lifecycle hook that is called when the component is mounted.
+     * It sets the value of 'searchQuery' to the 'searchQuery' state from the 'home' Vuex module.
+     */
     onMounted(() => {
       searchQuery.value = store.state.home.searchQuery
     })
 
-  /**
-   * Toggles the theme between 'light' and 'dark'
-   * and updates the body class
-   */
+    /**
+     * Toggles the theme between 'light' and 'dark'
+     * and updates the body class
+     */
     const handleClearText = () => {
       searchQuery.value = ''
       store.dispatch('home/updateSearchQuery', '')

@@ -8,9 +8,9 @@
 <script lang="ts">
 import { defineComponent, computed, ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
+import * as Products from '@/api/mocks/products.json'
 import HeaderBar from '@/components/organism/HeaderBar.vue'
 import ProductListing from '@/components/organism/ProductListing.vue'
-import * as Products from '@/api/mocks/products.json'
 
 /**
  * HomeView component
@@ -59,12 +59,19 @@ export default defineComponent({
       })
     })
 
-    // Method to update searchQuery in Vuex store
+    /**
+     * Method to update searchQuery in Vuex store.
+     * It dispatches the 'home/updateSearchQuery' action with the provided query.
+     * @param {string} query - The search query.
+     */
     const updateSearchQuery = (query: string) => {
       store.dispatch('home/updateSearchQuery', query)
     }
 
-    // On component mount, set products to Vuex store
+    /**
+     * Lifecycle hook that is called when the component is mounted.
+     * It dispatches the 'home/updateProducts' action with the products array.
+     */
     onMounted(() => {
       // store.commit('setProducts', Products.products)
       store.dispatch('home/updateProducts', Products.products)

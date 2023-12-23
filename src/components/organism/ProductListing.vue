@@ -4,9 +4,8 @@
     <!-- Loop through each product and render a ProductCard component for it -->
     <ProductCard v-for="product in products" :key="product.id" :product="product" />
   </div>
-  
-  <div class="not-found" v-if="products.length === 0">No Games found
-      </div>
+
+  <div class="not-found" v-if="products.length === 0">No Games found</div>
 </template>
 
 <script lang="ts">
@@ -20,7 +19,7 @@ export default defineComponent({
     ProductCard
   },
   props: {
-     /**
+    /**
      * Array of products to be displayed
      * @type {Array}
      */
@@ -33,7 +32,7 @@ export default defineComponent({
     // Access Vuex store
     const store = useStore()
 
-     /**
+    /**
      * Computed property that determines if the grid view is active
      * @returns {boolean}
      */
@@ -75,8 +74,8 @@ export default defineComponent({
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva,
+    Verdana, sans-serif;
   width: 100%;
-
 }
 </style>

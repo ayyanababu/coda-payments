@@ -7,20 +7,22 @@
     @click="handleClick"
   >
     <!-- The product's image. If the image fails to load, a fallback image is used. -->
-    <img :src="productImageSrc" alt="" @error="handleImageError" @load="handleImageLoad" :class="{ 'fade-in': imageLoaded }" />
+    <img
+      :src="productImageSrc"
+      alt=""
+      @error="handleImageError"
+      @load="handleImageLoad"
+      :class="{ 'fade-in': imageLoaded }"
+    />
     <!-- The product's title. -->
     <span>{{ product?.productTitle }}</span>
   </a>
 </template>
 
 <script setup lang="ts">
-// Vue imports
 import { defineComponent, ref } from 'vue'
-// Vuex imports
 import { mapState, mapActions } from 'vuex'
-// Type imports
 import type { ProductCardProps } from '@/store/productDetail'
-// Asset imports
 import fallbackImg from '@/assets/fallbackImg.png'
 
 const imageLoaded = ref(false)
@@ -32,26 +34,35 @@ const handleImageLoad = () => {
 <script lang="ts">
 export default defineComponent({
   name: 'ProductCard',
-  components: {},
+  /**
+   * @property {Object} product - The product object that contains the details of a product.
+   * @property {string} product.name - The name of the product.
+   * @property {string} product.logoLocation - The URL of the product image.
+   * This prop is required.
+   */
   props: {
     product: {
       type: Object as () => ProductCardProps,
       required: true
     }
   },
+  /**
+   * @data {string} productImageSrc - The source of the product image. If the product's logoLocation is not provided, a fallback image is used.
+   */
   data() {
     return {
-      // The product's image source. If the product's logoLocation is not provided, a fallback image is used.
       productImageSrc: this.product?.logoLocation || fallbackImg
     }
   },
+  /**
+   * @computed {boolean} isGridView - Returns true if the gridType state from the 'home' Vuex module is 'grid', otherwise returns false.
+   */
   computed: {
     ...mapState('home', ['gridType']),
     isGridView(): boolean {
       return this.gridType ? this.gridType === 'grid' : false
     }
   },
-  mounted() {},
   methods: {
     ...mapActions('productDetail', ['setProductDetail']),
     /**
@@ -76,7 +87,6 @@ export default defineComponent({
 </script>
 
 <style scoped lang="scss">
-
 .fade-in {
   transition: opacity 1s;
   opacity: 1;
